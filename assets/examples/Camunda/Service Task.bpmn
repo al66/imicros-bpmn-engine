@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_02teml7" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.33.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.6.0">
+  <bpmn:collaboration id="Collaboration_0yvm1tx">
+    <bpmn:documentation>Simple example:  Start event - End event</bpmn:documentation>
+    <bpmn:participant id="Participant_1nvn9xv" name="Imicros Engine" processRef="Process_1e3xgqs" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_1e3xgqs" name="Start event - End event" isExecutable="true">
+    <bpmn:extensionElements>
+      <zeebe:versionTag value="v1" />
+    </bpmn:extensionElements>
+    <bpmn:sequenceFlow id="Flow_1fa0xty" sourceRef="incomingRequest" targetRef="addToStore" />
+    <bpmn:startEvent id="incomingRequest" name="Incoming request">
+      <bpmn:extensionElements>
+        <zeebe:properties>
+          <zeebe:property name="camundaModeler:exampleOutputJson" value="{ &#10;   &#34;userId&#34;: &#34;0969cfa5-f658-44ba-a429-c2cd04bef375&#34;, &#10;   &#34;email&#34;: &#34;john.doe@my-company.com&#34;,&#10;   &#34;locale&#34;: &#34;en-US&#34;,&#10;   &#34;confirmationToken&#34;: &#34;...signed JSON web token...&#34;&#10;}" />
+        </zeebe:properties>
+        <zeebe:ioMapping>
+          <zeebe:output source="={ &#34;userId&#34;: userID, &#34;email&#34;: email, &#34;locale&#34;: locale, &#34;confirmationToken&#34;: confirmationToken }" target="request" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1fa0xty</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0dlljzv" sourceRef="addToStore" targetRef="endEvent" />
+    <bpmn:endEvent id="endEvent" name="Result">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="={&#10;  email: request.email,&#10;  locale: request.locale,&#10;  token: request.confirmationToken,&#10;  storeId: storeId&#10;}" />
+        </zeebe:ioMapping>
+        <zeebe:properties>
+          <zeebe:property name="camundaModeler:exampleOutputJson" value="{ &#10;   &#34;userId&#34;: &#34;0969cfa5-f658-44ba-a429-c2cd04bef375&#34;, &#10;   &#34;email&#34;: &#34;john.doe@my-company.com&#34;,&#10;   &#34;locale&#34;: &#34;en-US&#34;,&#10;   &#34;confirmationToken&#34;: &#34;...signed JSON web token...&#34;&#10;}" />
+        </zeebe:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0dlljzv</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:serviceTask id="addToStore" name="Add to store">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="store.add" />
+        <zeebe:properties>
+          <zeebe:property name="camundaModeler:exampleOutputJson" value="{&#10;  &#34;storeId&#34;: &#34;my store uuid&#34;&#10;}" />
+        </zeebe:properties>
+        <zeebe:ioMapping>
+          <zeebe:input source="=request" target="object" />
+          <zeebe:output source="=result" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1fa0xty</bpmn:incoming>
+      <bpmn:outgoing>Flow_0dlljzv</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0yvm1tx">
+      <bpmndi:BPMNShape id="Participant_1nvn9xv_di" bpmnElement="Participant_1nvn9xv" isHorizontal="true">
+        <dc:Bounds x="200" y="80" width="470" height="250" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="incomingRequest">
+        <dc:Bounds x="292" y="182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="271" y="225" width="85" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1pemdzy_di" bpmnElement="endEvent">
+        <dc:Bounds x="572" y="182" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="576" y="225" width="32" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ikl31i_di" bpmnElement="addToStore">
+        <dc:Bounds x="400" y="160" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1fa0xty_di" bpmnElement="Flow_1fa0xty">
+        <di:waypoint x="328" y="200" />
+        <di:waypoint x="400" y="200" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0dlljzv_di" bpmnElement="Flow_0dlljzv">
+        <di:waypoint x="500" y="200" />
+        <di:waypoint x="572" y="200" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

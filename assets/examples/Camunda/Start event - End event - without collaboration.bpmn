@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_19704xh" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.33.1" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.6.0">
+  <bpmn:process id="Process_0nrl7hp" isExecutable="true">
+    <bpmn:extensionElements>
+      <zeebe:versionTag value="v1" />
+    </bpmn:extensionElements>
+    <bpmn:startEvent id="incomingRequest" name="Incoming Request">
+      <bpmn:extensionElements>
+        <zeebe:properties>
+          <zeebe:property name="camundaModeler:exampleOutputJson" value="{ &#10;   &#34;userId&#34;: &#34;0969cfa5-f658-44ba-a429-c2cd04bef375&#34;, &#10;   &#34;email&#34;: &#34;john.doe@my-company.com&#34;,&#10;   &#34;locale&#34;: &#34;en-US&#34;,&#10;   &#34;confirmationToken&#34;: &#34;...signed JSON web token...&#34;&#10;}" />
+        </zeebe:properties>
+        <zeebe:ioMapping>
+          <zeebe:output source="={ &#34;userId&#34;: userID, &#34;email&#34;: email, &#34;locale&#34;: locale, &#34;confirmationToken&#34;: confirmationToken }" target="request" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_0ohe2qj</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="endEvent">
+      <bpmn:extensionElements>
+        <zeebe:properties>
+          <zeebe:property name="camundaModeler:exampleOutputJson" value="{ &#10;   &#34;userId&#34;: &#34;0969cfa5-f658-44ba-a429-c2cd04bef375&#34;, &#10;   &#34;email&#34;: &#34;john.doe@my-company.com&#34;,&#10;   &#34;locale&#34;: &#34;en-US&#34;,&#10;   &#34;confirmationToken&#34;: &#34;...signed JSON web token...&#34;&#10;}" />
+        </zeebe:properties>
+        <zeebe:ioMapping>
+          <zeebe:output source="={&#10;  email: request.email,&#10;  locale: request.locale,&#10;  token: request.confirmationToken&#10;}" target="endEvent" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ohe2qj</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0ohe2qj" sourceRef="incomingRequest" targetRef="endEvent" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_0nrl7hp">
+      <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="incomingRequest">
+        <dc:Bounds x="182" y="82" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="157" y="125" width="89" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1q0bfi3_di" bpmnElement="endEvent">
+        <dc:Bounds x="272" y="82" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0ohe2qj_di" bpmnElement="Flow_0ohe2qj">
+        <di:waypoint x="218" y="100" />
+        <di:waypoint x="272" y="100" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
